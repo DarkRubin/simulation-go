@@ -9,6 +9,4 @@ type Occupier interface {
 	Pos() pos.Position
 }
 
-func (e EntityType) String() string {
-	return EntityTypeString[e]
-}
+type Occupiers map[EntityType][]Occupier
