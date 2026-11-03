@@ -2,28 +2,28 @@ package creature
 
 import (
 	"simulation/internal/occupier"
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
 type Herbivore struct {
-	position     positon.Position
+	position     pos.Position
 	healthPoints int
 	speed        int
 }
 
-func (h Herbivore) Type() occupier.EntityType {
+func (h *Herbivore) Type() occupier.EntityType {
 	return occupier.TypeHerbivore
 }
 
-func (h Herbivore) Pos() positon.Position {
+func (h *Herbivore) Pos() pos.Position {
 	return h.position
 }
 
-func (h Herbivore) HP() int {
+func (h *Herbivore) HP() int {
 	return h.healthPoints
 }
 
-func (h Herbivore) Speed() int {
+func (h *Herbivore) Speed() int {
 	return h.speed
 }
 
@@ -37,8 +37,8 @@ func (h Herbivore) Eat() {
 	panic("implement me")
 }
 
-func NewHerbivore(pos positon.Position, hp int, speed int) Creature {
-	return Herbivore{
+func NewHerbivore(pos pos.Position, hp int, speed int) Creature {
+	return &Herbivore{
 		position:     pos,
 		healthPoints: hp,
 		speed:        speed,

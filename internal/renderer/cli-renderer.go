@@ -3,7 +3,7 @@ package renderer
 import (
 	"fmt"
 	"simulation/internal/occupier"
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 	"simulation/internal/worldmap"
 	"strings"
 )
@@ -37,8 +37,7 @@ func (c CliRenderer) Render(m worldmap.Map) {
 
 	for i := range m.Height() {
 		for j := range m.Width() {
-			pos := positon.Pos(i, j)
-			posOccupier := m.GetOccupier(pos)
+			posOccupier := m.GetOccupier(pos.Pos(i, j))
 			if posOccupier != nil {
 				c.builder.WriteString(TypeEmoji[posOccupier.Type()])
 			} else {

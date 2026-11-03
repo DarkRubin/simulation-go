@@ -2,18 +2,18 @@ package worldmap
 
 import (
 	"simulation/internal/occupier"
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
 type Map struct {
-	data   map[positon.Position]occupier.Occupier
+	data   map[pos.Position]occupier.Occupier
 	height uint
 	width  uint
 }
 
 func New(h uint, w uint) *Map {
 	return &Map{
-		data:   make(map[positon.Position]occupier.Occupier, h*w),
+		data:   make(map[pos.Position]occupier.Occupier, h*w),
 		height: h,
 		width:  w,
 	}
@@ -31,15 +31,15 @@ func (m *Map) Size() uint {
 	return m.height * m.width
 }
 
-func (m *Map) GetOccupier(pos positon.Position) occupier.Occupier {
+func (m *Map) GetOccupier(pos pos.Position) occupier.Occupier {
 	return m.data[pos]
 }
 
-func (m *Map) SetOccupier(pos positon.Position, o occupier.Occupier) {
+func (m *Map) SetOccupier(pos pos.Position, o occupier.Occupier) {
 	m.data[pos] = o
 }
 
-func (m *Map) RemoveOccupier(pos positon.Position) {
+func (m *Map) RemoveOccupier(pos pos.Position) {
 	delete(m.data, pos)
 }
 

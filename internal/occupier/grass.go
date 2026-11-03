@@ -1,21 +1,21 @@
 package occupier
 
 import (
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
 type Grass struct {
-	position positon.Position
+	position pos.Position
 }
 
-func (g Grass) Type() EntityType {
+func (g *Grass) Type() EntityType {
 	return TypeGrass
 }
 
-func (g Grass) Pos() positon.Position {
+func (g *Grass) Pos() pos.Position {
 	return g.position
 }
 
-func newGrass(pos positon.Position) Occupier {
-	return Grass{position: pos}
+func newGrass(pos pos.Position) Occupier {
+	return &Grass{position: pos}
 }

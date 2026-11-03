@@ -1,7 +1,7 @@
 package occupier
 
 import (
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
 const (
@@ -25,11 +25,7 @@ type EntityType int
 
 type Occupier interface {
 	Type() EntityType
-	Pos() positon.Position
-}
-
-func (e EntityType) IsCreature() bool {
-	return e == TypePredator || e == TypeHerbivore
+	Pos() pos.Position
 }
 
 func (e EntityType) String() string {

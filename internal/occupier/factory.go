@@ -2,10 +2,10 @@ package occupier
 
 import (
 	"fmt"
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
-func NewStaticOccupier(entType EntityType, pos positon.Position) Occupier {
+func NewStaticOccupier(entType EntityType, pos pos.Position) Occupier {
 	switch entType {
 	case TypeGrass:
 		return newGrass(pos)

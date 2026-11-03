@@ -3,10 +3,10 @@ package creature
 import (
 	"fmt"
 	"simulation/internal/occupier"
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
-func NewCreature(creatType occupier.EntityType, pos positon.Position, hp int, speed int) Creature {
+func NewCreature(creatType occupier.EntityType, pos pos.Position, hp int, speed int) Creature {
 	switch creatType {
 	case occupier.TypeHerbivore:
 		return NewHerbivore(pos, hp, speed)

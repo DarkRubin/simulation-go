@@ -1,21 +1,21 @@
 package occupier
 
 import (
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 )
 
 type Rock struct {
-	position positon.Position
+	position pos.Position
 }
 
-func (r Rock) Type() EntityType {
+func (r *Rock) Type() EntityType {
 	return TypeRock
 }
 
-func (r Rock) Pos() positon.Position {
+func (r *Rock) Pos() pos.Position {
 	return r.position
 }
 
-func newRock(pos positon.Position) Occupier {
-	return Rock{position: pos}
+func newRock(pos pos.Position) Occupier {
+	return &Rock{position: pos}
 }
