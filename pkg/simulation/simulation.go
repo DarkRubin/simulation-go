@@ -2,13 +2,12 @@ package simulation
 
 import (
 	"simulation/internal/worldmap"
-	"time"
 )
 
 type Simulation interface {
 	Map() *worldmap.Map
 	NextTurn()
-	Start(time.Duration)
+	Start()
 	Pause()
 	Resume()
 }
