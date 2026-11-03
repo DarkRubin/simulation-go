@@ -27,9 +27,16 @@ func (h *Herbivore) Speed() int {
 	return h.speed
 }
 
-func (h Herbivore) Move() {
-	//TODO implement me
-	panic("implement me")
+func (h *Herbivore) Move(way []pos.Position) {
+	wayLen := len(way)
+	if wayLen == 0 {
+		return
+	}
+	if wayLen <= h.Speed() {
+		targ := way[wayLen-1]
+		h.position = targ
+	}
+	h.position = way[h.Speed()]
 }
 
 func (h Herbivore) Eat() {

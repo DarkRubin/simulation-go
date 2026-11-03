@@ -32,9 +32,16 @@ func (p *Predator) Damage() int {
 	return p.damage
 }
 
-func (p Predator) Move() {
-	//TODO implement me
-	panic("implement me")
+func (p *Predator) Move(way []pos.Position) {
+	wayLen := len(way)
+	if wayLen == 0 {
+		return
+	}
+	if wayLen <= p.Speed() {
+		targ := way[wayLen-1]
+		p.position = targ
+	}
+	p.position = way[p.Speed()]
 }
 
 func NewPredator(pos pos.Position, damage int, hp int, speed int) Creature {
