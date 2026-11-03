@@ -24,10 +24,9 @@ var TypeEmoji = map[occupier.EntityType]string{
 
 const EmptyCellEmoji = "🟩"
 
-func NewCliRenderer(m *worldmap.Map) *CliRenderer {
+func NewCliRenderer(bufSize int) *CliRenderer {
 	builder := strings.Builder{}
-	capacity := int(m.Width()*m.Width()) * 2
-	builder.Grow(capacity)
+	builder.Grow(bufSize)
 
 	return &CliRenderer{&builder}
 }
