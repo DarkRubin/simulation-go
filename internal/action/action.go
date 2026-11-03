@@ -1,9 +1,10 @@
 package action
 
 import (
+	"simulation/internal/occupier"
 	"simulation/internal/worldmap"
 )
 
 type Action interface {
-	Act(*worldmap.Map)
+	Act(w *worldmap.Map, m occupier.Occupiers)
 }

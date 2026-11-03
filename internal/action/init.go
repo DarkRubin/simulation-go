@@ -3,7 +3,7 @@ package action
 import (
 	"simulation/internal/occupier"
 	"simulation/internal/occupier/creature"
-	"simulation/internal/positon"
+	"simulation/internal/pos"
 	"simulation/internal/worldmap"
 )
 
@@ -14,26 +14,26 @@ type InitAction interface {
 type PutEntitiesInitAction struct {
 }
 
-func (p PutEntitiesInitAction) Act(w *worldmap.Map) {
+func (p PutEntitiesInitAction) Act(w *worldmap.Map, m occupier.Occupiers) {
 	for entType := range occupier.TypeCount_ {
 		for range amountFor(entType, w.Size()) {
-			pos := positon.RandomPos(w.Height(), w.Width())
-			spawnOnMap(w, pos, entType)
+			randPos := pos.RandomPos(w.Height(), w.Width())
+			occ := spawn(randPos, entType)
+			w.SetOccupier(randPos, occ)
+			m[entType] = append(m[entType], occ)
 		}
 	}
 }
 
-func spawnOnMap(w *worldmap.Map, pos positon.Position, entType occupier.EntityType) {
-	var occ occupier.Occupier
+func spawn(pos pos.Position, entType occupier.EntityType) occupier.Occupier {
 	if entType.IsCreature() {
-		occ = creature.NewCreature(entType, pos, 10, 3)
-	} else {
-		occ = occupier.NewStaticOccupier(entType, pos)
+		return creature.NewCreature(entType, pos, 10, 1)
 	}
-	w.SetOccupier(pos, occ)
+
+	return occupier.NewStaticOccupier(entType, pos)
 }
 
 func amountFor(entType occupier.EntityType, available uint) uint {
-	chance := 20 / float64(100)
+	chance := 20 / 100.0
 	return uint(float64(available) * chance)
 }
