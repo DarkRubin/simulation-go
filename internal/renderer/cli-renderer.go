@@ -19,6 +19,7 @@ var TypeEmoji = map[occupier.EntityType]string{
 	occupier.TypeTree:      "🌲",
 	occupier.TypeHerbivore: "🐰",
 	occupier.TypePredator:  "🐺",
+	occupier.TypeCount_:    "⛔️",
 }
 
 const EmptyCellEmoji = "🟩"
