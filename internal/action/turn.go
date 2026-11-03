@@ -48,8 +48,8 @@ func nearestManhattan(src pos.Position, variants []occupier.Occupier) (int, uint
 	smallestDist := uint(math.MaxUint)
 	var result int
 	for i, variant := range variants {
-		xDiff := math.Abs(float64(src.X() - variant.Pos().X()))
-		yDiff := math.Abs(float64(src.Y() - variant.Pos().Y()))
+		xDiff := math.Abs(float64(int(src.X()) - int(variant.Pos().X())))
+		yDiff := math.Abs(float64(int(src.Y()) - int(variant.Pos().Y())))
 
 		distance := uint(xDiff + yDiff)
 		if distance < smallestDist {
