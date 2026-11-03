@@ -3,6 +3,7 @@ package simulation
 import (
 	"fmt"
 	"simulation/internal/action"
+	"simulation/internal/occupier"
 	"simulation/internal/renderer"
 	"simulation/internal/worldmap"
 	"sync/atomic"
@@ -11,6 +12,7 @@ import (
 
 type SingleThreadSimulation struct {
 	worldMap    *worldmap.Map
+	occupiers   occupier.Occupiers
 	renderer    renderer.Renderer
 	initActions []action.Action
 	turnActions []action.Action
@@ -22,6 +24,7 @@ type SingleThreadSimulation struct {
 func New(m *worldmap.Map, r renderer.Renderer, init []action.Action, turn []action.Action) Simulation {
 	return &SingleThreadSimulation{
 		worldMap:    m,
+		occupiers:   occupier.Occupiers{},
 		renderer:    r,
 		initActions: init,
 		turnActions: turn,
@@ -38,7 +41,7 @@ func (s *SingleThreadSimulation) NextTurn() {
 	}
 
 	for _, act := range s.turnActions {
-		act.Act(s.worldMap)
+		act.Act(s.worldMap, s.occupiers)
 	}
 	s.turnCounter++
 	fmt.Println("Move ", s.turnCounter)
@@ -47,7 +50,7 @@ func (s *SingleThreadSimulation) NextTurn() {
 
 func (s *SingleThreadSimulation) Start(moveDelay time.Duration) {
 	for _, act := range s.initActions {
-		act.Act(s.worldMap)
+		act.Act(s.worldMap, s.occupiers)
 	}
 	s.started.Store(true)
 
