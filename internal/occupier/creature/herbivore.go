@@ -39,9 +39,9 @@ func (h *Herbivore) Move(way []pos.Position) {
 	h.position = way[h.Speed()]
 }
 
-func (h Herbivore) Eat() {
-	//TODO implement me
-	panic("implement me")
+func (h *Herbivore) Eat(food occupier.Occupier) {
+	h.position = food.Pos()
+	h.healthPoints += 5
 }
 
 func NewHerbivore(pos pos.Position, hp int, speed int) Creature {

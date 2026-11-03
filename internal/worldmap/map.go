@@ -19,6 +19,14 @@ func New(h uint, w uint) *Map {
 	}
 }
 
+func (m *Map) IsValidPos(pos pos.Position) bool {
+	return pos.X() <= m.width && pos.Y() <= m.height
+}
+
+func (m *Map) IsPosFree(pos pos.Position) bool {
+	return m.data[pos] == nil
+}
+
 func (m *Map) Height() uint {
 	return m.height
 }
@@ -41,8 +49,4 @@ func (m *Map) SetOccupier(pos pos.Position, o occupier.Occupier) {
 
 func (m *Map) RemoveOccupier(pos pos.Position) {
 	delete(m.data, pos)
-}
-
-func (m *Map) IsPosFree(pos positon.Position) bool {
-	return m.data[pos] == nil
 }
