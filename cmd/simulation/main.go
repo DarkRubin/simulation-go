@@ -3,6 +3,7 @@ package main
 import (
 	"simulation/internal/action"
 	"simulation/internal/renderer"
+	"simulation/internal/wayfinder"
 	"simulation/internal/worldmap"
 	"simulation/pkg/simulation"
 	"time"
@@ -19,7 +20,7 @@ func main() {
 	render := renderer.NewCliRenderer(world)
 
 	initActions := []action.Action{action.PutEntitiesInitAction{}}
-	var turnActions []action.Action
+	turnActions := []action.Action{action.MoveOrEatAction{Wayfinder: wayfinder.Bfs{}}}
 	var sim = simulation.New(world, render, initActions, turnActions)
 
 	sim.Start(DefaultMoveDelay)
