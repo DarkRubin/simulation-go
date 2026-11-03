@@ -21,12 +21,12 @@ func findRecursive(src pos.Position, way []pos.Position, check check) []pos.Posi
 	next := []pos.Position{src}
 	target := way[len(way)-1]
 
-	if slices.Contains(getNearPositions(target), src) {
+	if slices.Contains(nearPoss(target), src) {
 		return way
 	}
 
 	for _, current := range next {
-		for _, nearPos := range getNearPositions(current) {
+		for _, nearPos := range nearPoss(current) {
 			if !slices.Contains(visited, nearPos) && check(nearPos) {
 				if nearPos == target {
 					way = append(way, current)
@@ -40,7 +40,7 @@ func findRecursive(src pos.Position, way []pos.Position, check check) []pos.Posi
 	return []pos.Position{}
 }
 
-func getNearPositions(src pos.Position) []pos.Position {
+func nearPoss(src pos.Position) []pos.Position {
 	return []pos.Position{
 		src.Up(),
 		src.Down(),
