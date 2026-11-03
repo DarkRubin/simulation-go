@@ -32,8 +32,8 @@ func (m MoveOrEatAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 			herbivore.Eat(target)
 			w.SetOccupier(target.Pos(), herb)
 
-			o[occupier.TypeGrass] = slices.Delete(grasses, targetIdx, targetIdx+1)
-			return
+			grasses = slices.Delete(grasses, targetIdx, targetIdx+1)
+			continue
 		}
 		check := func(position pos.Position) bool {
 			return w.IsValidPos(position) && w.IsPosFree(position)
@@ -42,6 +42,7 @@ func (m MoveOrEatAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 		way := m.Wayfinder.Find(herb.Pos(), target.Pos(), check)
 		herbivore.Move(way)
 	}
+	o[occupier.TypeGrass] = grasses
 }
 
 func nearestManhattan(src pos.Position, variants []occupier.Occupier) (int, uint) {
