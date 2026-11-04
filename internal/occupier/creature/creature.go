@@ -10,4 +10,5 @@ type Creature interface {
 	HP() int
 	Speed() int
 	Move(way []pos.Position)
+	TargetType() occupier.EntityType
 }

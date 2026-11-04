@@ -32,6 +32,10 @@ func (p *Predator) Damage() int {
 	return p.damage
 }
 
+func (p *Predator) TargetType() occupier.EntityType {
+	return occupier.TypeHerbivore
+}
+
 func (p *Predator) Move(way []pos.Position) {
 	wayLen := len(way)
 	if wayLen == 0 {

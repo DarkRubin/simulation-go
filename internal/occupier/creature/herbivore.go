@@ -44,6 +44,10 @@ func (h *Herbivore) Eat(food occupier.Occupier) {
 	h.healthPoints += 5
 }
 
+func (h *Herbivore) TargetType() occupier.EntityType {
+	return occupier.TypeGrass
+}
+
 func NewHerbivore(pos pos.Position, hp int, speed int) Creature {
 	return &Herbivore{
 		position:     pos,
