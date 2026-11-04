@@ -3,7 +3,7 @@ package settings
 import "time"
 
 const (
-	DefaultMoveDelay   = 400 * time.Millisecond
+	DefaultMoveMsDelay = 600
 	DefaultWorldHeight = 6
 	DefaultWorldWidth  = 7
 
@@ -14,36 +14,39 @@ const (
 	DefaultPredatorHp        = 10
 	DefaultPredatorHeal      = 5
 	DefaultPredatorDamage    = 5
+
+	DefaultGrassSpawnChance     = 10
+	DefaultRockSpawnChance      = 10
+	DefaultTreeSpawnChance      = 10
+	DefaultHerbivoreSpawnChance = 10
+	DefaultPredatorSpawnChance  = 10
 )
 
 type Settings struct {
-	moveDelay         time.Duration
-	worldHeight       uint
-	worldWidth        uint
-	creaturesMaxSpeed uint
-	creaturesMinSpeed uint
-	herbivoreHp       uint
-	herbivoreHeal     uint
-	predatorHp        uint
-	predatorHeal      uint
-	predatorDamage    uint
+	MoveDelay            uint
+	WorldHeight          uint
+	WorldWidth           uint
+	CreaturesMaxSpeed    uint
+	CreaturesMinSpeed    uint
+	HerbivoreHp          uint
+	HerbivoreHeal        uint
+	PredatorHp           uint
+	PredatorHeal         uint
+	PredatorDamage       uint
+	GrassSpawnChance     uint
+	RockSpawnChance      uint
+	TreeSpawnChance      uint
+	HerbivoreSpawnChance uint
+	PredatorSpawnChance  uint
 }
 
-func (s *Settings) MoveDelay() time.Duration {
-	return s.moveDelay
-}
-
-func (s *Settings) WorldHeight() uint {
-	return s.worldHeight
-}
-
-func (s *Settings) WorldWidth() uint {
-	return s.worldWidth
+func (s *Settings) GetMoveDelayDuration() time.Duration {
+	return time.Duration(DefaultMoveMsDelay) * time.Millisecond
 }
 
 func Default() *Settings {
 	return &Settings{
-		DefaultMoveDelay,
+		DefaultMoveMsDelay,
 		DefaultWorldHeight,
 		DefaultWorldWidth,
 		DefaultCreaturesMaxSpeed,
@@ -53,5 +56,10 @@ func Default() *Settings {
 		DefaultPredatorHp,
 		DefaultHerbivoreHeal,
 		DefaultPredatorHeal,
+		DefaultGrassSpawnChance,
+		DefaultRockSpawnChance,
+		DefaultTreeSpawnChance,
+		DefaultHerbivoreSpawnChance,
+		DefaultPredatorSpawnChance,
 	}
 }

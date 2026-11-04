@@ -11,7 +11,7 @@ import (
 
 func main() {
 	sets := settings.Default()
-	world := worldmap.New(sets.WorldHeight(), sets.WorldWidth())
+	world := worldmap.New(sets.WorldHeight, sets.WorldWidth)
 	render := renderer.NewCliRenderer(int(world.Size() * 2))
 
 	initActions := []action.Action{action.PutEntitiesInitAction{}}
