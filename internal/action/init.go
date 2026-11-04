@@ -1,9 +1,11 @@
 package action
 
 import (
+	"fmt"
 	"simulation/internal/occupier"
 	"simulation/internal/occupier/creature"
 	"simulation/internal/pos"
+	"simulation/internal/settings"
 	"simulation/internal/worldmap"
 )
 
@@ -12,11 +14,13 @@ type InitAction interface {
 }
 
 type PutEntitiesInitAction struct {
+	*settings.Settings
 }
 
 func (p PutEntitiesInitAction) Act(w *worldmap.Map, m occupier.Occupiers) {
 	for entType := range occupier.TypeCount_ {
-		amount := amountFor(entType, w.Size())
+		percent := float64(p.chanceFor(entType)) / 100.0
+		amount := int(float64(w.Size()) * percent)
 		m[entType] = p.spawnAll(entType, w, amount)
 	}
 }
@@ -40,7 +44,19 @@ func (p PutEntitiesInitAction) spawnAll(entType occupier.EntityType, w *worldmap
 	return occupiers
 }
 
-func amountFor(entType occupier.EntityType, available uint) int {
-	chance := 10 / 100.0
-	return int(float64(available) * chance)
+func (p PutEntitiesInitAction) chanceFor(e occupier.EntityType) uint {
+	switch e {
+	case occupier.TypeGrass:
+		return p.Settings.GrassSpawnChance
+	case occupier.TypeRock:
+		return p.Settings.RockSpawnChance
+	case occupier.TypeTree:
+		return p.Settings.TreeSpawnChance
+	case occupier.TypeHerbivore:
+		return p.Settings.HerbivoreSpawnChance
+	case occupier.TypePredator:
+		return p.Settings.PredatorSpawnChance
+	default:
+		panic(fmt.Sprintf("unknown occupier type for spawn: %s", e))
+	}
 }

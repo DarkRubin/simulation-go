@@ -14,7 +14,7 @@ func main() {
 	world := worldmap.New(sets.WorldHeight, sets.WorldWidth)
 	render := renderer.NewCliRenderer(int(world.Size() * 2))
 
-	initActions := []action.Action{action.PutEntitiesInitAction{}}
+	initActions := []action.Action{action.PutEntitiesInitAction{Settings: sets}}
 	turnActions := []action.Action{action.MoveOrEatAction{Wayfinder: wayfinder.Bfs{}}}
 	var sim = simulation.New(*sets, world, render, initActions, turnActions)
 
