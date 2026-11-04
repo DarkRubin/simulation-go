@@ -35,8 +35,9 @@ func (h *Herbivore) Move(way []pos.Position) {
 	if wayLen <= h.Speed() {
 		targ := way[wayLen-1]
 		h.position = targ
+	} else {
+		h.position = way[h.Speed()]
 	}
-	h.position = way[h.Speed()]
 }
 
 func (h *Herbivore) Eat(food occupier.Occupier) {

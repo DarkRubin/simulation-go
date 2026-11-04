@@ -44,8 +44,9 @@ func (p *Predator) Move(way []pos.Position) {
 	if wayLen <= p.Speed() {
 		targ := way[wayLen-1]
 		p.position = targ
+	} else {
+		p.position = way[p.Speed()]
 	}
-	p.position = way[p.Speed()]
 }
 
 func NewPredator(pos pos.Position, damage int, hp int, speed int) Creature {
