@@ -63,12 +63,14 @@ func (p *Predator) Eat(food occupier.Occupier) bool {
 	if p.moved {
 		return false
 	}
+	p.moved = true
 	if food.Type() != p.TargetType() {
 		panic("invalid type of provided food")
 	}
 	herb := food.(*Herbivore)
 	if herb.HP() > 0 {
 		herb.Hurt(p.damage)
+		p.healthPoints += 3
 		return false
 	}
 
