@@ -12,3 +12,5 @@ type Creature interface {
 	Move(way []pos.Position)
 	TargetType() occupier.EntityType
 }
+
+var Types = [2]occupier.EntityType{occupier.TypeHerbivore, occupier.TypePredator}
