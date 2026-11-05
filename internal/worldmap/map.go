@@ -50,3 +50,15 @@ func (m *Map) Put(pos pos.Position, o occupier.Occupier) {
 func (m *Map) Remove(pos pos.Position) {
 	delete(m.data, pos)
 }
+
+func (m *Map) GetAll(poss []pos.Position) []occupier.Occupier {
+	result := make([]occupier.Occupier, len(poss))
+	for i, position := range poss {
+		if !m.IsValidPos(position) {
+			result[i] = nil
+		} else {
+			result[i] = m.data[position]
+		}
+	}
+	return result
+}
