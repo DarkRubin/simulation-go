@@ -23,6 +23,10 @@ func (m *Map) IsValidPos(pos pos.Position) bool {
 	return pos.X() <= m.width-1 && pos.Y() <= m.height-1
 }
 
+func (m *Map) IsHaveMoreSpace() bool {
+	return uint(len(m.data)) < m.Size()
+}
+
 func (m *Map) IsPosFree(pos pos.Position) bool {
 	return m.data[pos] == nil
 }
