@@ -5,46 +5,63 @@ import (
 	"slices"
 )
 
+const MaxWayTurns = 100
+
 type Bfs struct {
 }
 
-func (b Bfs) Find(curr pos.Position, target pos.Position, check check) []pos.Position {
-	way := findRecursive(curr, []pos.Position{target}, check)
-	if len(way) > 1 {
-		return way[:len(way)-1]
+func (b Bfs) Find(current pos.Position, targets []pos.Position, expand expand) ([]pos.Position, bool) {
+	way := make([]pos.Position, 0, MaxWayTurns)
+
+	target, success := bfs(current, targets, expand)
+	way = append([]pos.Position{target}, way...)
+	if !success {
+		return way, false
 	}
-	return []pos.Position{}
+
+	for !slices.Contains(current.Neighbors(), target) {
+		nextTargets := removeAll(expand(target), way)
+		target, success = bfs(current, nextTargets, expand)
+		if !success {
+			return way, false
+		}
+		if len(way)+1 == MaxWayTurns {
+			panic("too many way tiles found")
+			return way, false
+		}
+		way = append([]pos.Position{target}, way...)
+	}
+
+	return way[:len(way)-1], true
 }
 
-func findRecursive(src pos.Position, way []pos.Position, check check) []pos.Position {
-	visited := []pos.Position{src}
-	next := []pos.Position{src}
-	target := way[len(way)-1]
+func bfs(start pos.Position, targets []pos.Position, expand expand) (pos.Position, bool) {
+	visited := make(map[pos.Position]bool)
+	var current pos.Position
+	queue := []pos.Position{start}
 
-	if slices.Contains(nearPoss(target), src) {
-		return way
-	}
-
-	for _, current := range next {
-		for _, nearPos := range nearPoss(current) {
-			if !slices.Contains(visited, nearPos) && check(nearPos) {
-				if nearPos == target {
-					way = append(way, current)
-					return findRecursive(src, way, check)
-				}
-				next = append(next, nearPos)
+	for len(queue) > 0 {
+		current, queue = queue[len(queue)-1], queue[:len(queue)-1]
+		if slices.Contains(targets, current) {
+			return current, true
+		}
+		visited[current] = true
+		for _, child := range expand(current) {
+			if visited[child] == false {
+				queue = append(queue, child)
+				visited[child] = true
 			}
 		}
-		visited = append(visited, current)
 	}
-	return []pos.Position{}
+	return pos.Position{}, false
 }
 
-func nearPoss(src pos.Position) []pos.Position {
-	return []pos.Position{
-		src.Up(),
-		src.Down(),
-		src.Left(),
-		src.Right(),
+func removeAll(src []pos.Position, delete []pos.Position) []pos.Position {
+	result := make([]pos.Position, 0, len(src))
+	for _, srcPos := range src {
+		if !slices.Contains(delete, srcPos) {
+			result = append(result, srcPos)
+		}
 	}
+	return result
 }
