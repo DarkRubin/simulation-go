@@ -36,7 +36,7 @@ func (c CliRenderer) Render(m worldmap.Map) {
 
 	for i := range m.Height() {
 		for j := range m.Width() {
-			posOccupier := m.GetOccupier(pos.Pos(i, j))
+			posOccupier := m.Get(pos.Pos(j, i))
 			if posOccupier != nil {
 				c.builder.WriteString(TypeEmoji[posOccupier.Type()])
 			} else {
