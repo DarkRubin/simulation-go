@@ -16,6 +16,6 @@ func (t *Tree) Pos() pos.Position {
 	return t.position
 }
 
-func newTree(pos pos.Position) Occupier {
+func NewTree(pos pos.Position) Occupier {
 	return &Tree{position: pos}
 }

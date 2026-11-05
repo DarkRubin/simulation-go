@@ -16,6 +16,6 @@ func (g *Grass) Pos() pos.Position {
 	return g.position
 }
 
-func newGrass(pos pos.Position) Occupier {
+func NewGrass(pos pos.Position) Occupier {
 	return &Grass{position: pos}
 }

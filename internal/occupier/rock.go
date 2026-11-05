@@ -16,6 +16,6 @@ func (r *Rock) Pos() pos.Position {
 	return r.position
 }
 
-func newRock(pos pos.Position) Occupier {
+func NewRock(pos pos.Position) Occupier {
 	return &Rock{position: pos}
 }
