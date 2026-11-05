@@ -5,7 +5,7 @@ import (
 )
 
 type WayFinder interface {
-	Find(curr pos.Position, target pos.Position, check check) []pos.Position
+	Find(current pos.Position, targets []pos.Position, expand expand) ([]pos.Position, bool)
 }
 
-type check func(position pos.Position) (available bool)
+type expand func(position pos.Position) []pos.Position
