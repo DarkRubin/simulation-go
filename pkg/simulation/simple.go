@@ -63,6 +63,7 @@ func (s *SingleThreadSimulation) Start() {
 	time.Sleep(s.settings.GetMoveDelayDuration())
 
 	for !s.paused.Load() {
+		s.renderer.ClearScreen()
 		s.NextTurn()
 		time.Sleep(s.settings.GetMoveDelayDuration())
 	}
