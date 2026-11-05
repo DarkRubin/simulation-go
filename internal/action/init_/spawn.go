@@ -1,20 +1,21 @@
 package init_
 
 import (
-	"simulation/internal/action"
 	"simulation/internal/occupier"
-	"simulation/internal/settings"
+	"simulation/internal/occupier/spawner"
 	"simulation/internal/worldmap"
 )
 
 type SpawnOccupiersAction struct {
-	settings.Settings
+	spawner.Spawner
 }
 
 func (s SpawnOccupiersAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 	for entity := range occupier.TypeCount_ {
-		chance := settings.ChanceFor(entity, s.Settings)
-		amount := action.CalculateAmount(w, chance)
-		o[entity] = action.SpawnAll(entity, w, s.Settings, amount)
+		for range s.AmountFor(entity, w.Size()) {
+			summoned := s.New(entity, w.FreePos())
+			w.Put(summoned.Pos(), summoned)
+			o[entity] = append(o[entity], summoned.Pos())
+		}
 	}
 }
