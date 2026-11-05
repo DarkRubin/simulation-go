@@ -19,10 +19,6 @@ var EntityTypeString = map[EntityType]string{
 	TypePredator:  "Predator",
 }
 
-func (e EntityType) IsCreature() bool {
-	return e == TypePredator || e == TypeHerbivore
-}
-
 func (e EntityType) String() string {
 	return EntityTypeString[e]
 }
