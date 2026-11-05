@@ -3,9 +3,10 @@ package settings
 import "time"
 
 const (
-	DefaultMoveMsDelay = 600
-	DefaultWorldHeight = 6
-	DefaultWorldWidth  = 7
+	DefaultMoveMsDelay        = 600
+	DefaultMovesBeforeRespawn = 3
+	DefaultWorldHeight        = 6
+	DefaultWorldWidth         = 7
 
 	DefaultHerbivoreSpeed = 1
 	DefaultHerbivoreHp    = 10
@@ -24,6 +25,7 @@ const (
 
 type Settings struct {
 	MoveDelay            uint
+	MovesBeforeRespawn   uint
 	WorldHeight          uint
 	WorldWidth           uint
 	HerbivoreSpeed       uint
@@ -47,6 +49,7 @@ func (s *Settings) GetMoveDelayDuration() time.Duration {
 func Default() *Settings {
 	return &Settings{
 		DefaultMoveMsDelay,
+		DefaultMovesBeforeRespawn,
 		DefaultWorldHeight,
 		DefaultWorldWidth,
 		DefaultHerbivoreSpeed,
