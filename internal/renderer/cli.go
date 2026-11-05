@@ -2,6 +2,9 @@ package renderer
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+	"runtime"
 	"simulation/internal/occupier"
 	"simulation/internal/pos"
 	"simulation/internal/worldmap"
@@ -48,4 +51,17 @@ func (c CliRenderer) Render(m worldmap.Map) {
 	}
 	c.builder.WriteRune('\n')
 	fmt.Println(c.builder.String())
+}
+
+func (c CliRenderer) ClearScreen() {
+	var cmd *exec.Cmd
+
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", "cls")
+	} else {
+		cmd = exec.Command("clear")
+	}
+
+	cmd.Stdout = os.Stdout
+	_ = cmd.Run()
 }
