@@ -39,14 +39,14 @@ func (m *Map) Size() uint {
 	return m.height * m.width
 }
 
-func (m *Map) GetOccupier(pos pos.Position) occupier.Occupier {
+func (m *Map) Get(pos pos.Position) occupier.Occupier {
 	return m.data[pos]
 }
 
-func (m *Map) SetOccupier(pos pos.Position, o occupier.Occupier) {
+func (m *Map) Put(pos pos.Position, o occupier.Occupier) {
 	m.data[pos] = o
 }
 
-func (m *Map) RemoveOccupier(pos pos.Position) {
+func (m *Map) Remove(pos pos.Position) {
 	delete(m.data, pos)
 }
