@@ -20,7 +20,7 @@ func New(h uint, w uint) *Map {
 }
 
 func (m *Map) IsValidPos(pos pos.Position) bool {
-	return pos.X() <= m.width && pos.Y() <= m.height
+	return pos.X() <= m.width-1 && pos.Y() <= m.height-1
 }
 
 func (m *Map) IsPosFree(pos pos.Position) bool {
