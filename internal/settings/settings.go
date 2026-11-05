@@ -8,7 +8,7 @@ const (
 	DefaultWorldHeight        = 6
 	DefaultWorldWidth         = 7
 
-	DefaultHerbivoreSpeed = 1
+	DefaultHerbivoreSpeed = 2
 	DefaultHerbivoreHp    = 10
 	DefaultHerbivoreHeal  = 5
 	DefaultPredatorSpeed  = 1
