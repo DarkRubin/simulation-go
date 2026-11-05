@@ -60,6 +60,7 @@ func (s *SingleThreadSimulation) Start() {
 
 	fmt.Println("Original simulation")
 	s.renderer.Render(*s.worldMap)
+	time.Sleep(s.settings.GetMoveDelayDuration())
 
 	for !s.paused.Load() {
 		s.NextTurn()
