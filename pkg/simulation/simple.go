@@ -1,18 +1,17 @@
 package simulation
 
 import (
-	"fmt"
 	"simulation/internal/action"
 	"simulation/internal/occupier"
 	"simulation/internal/renderer"
-	"simulation/internal/settings"
 	"simulation/internal/worldmap"
+	"simulation/pkg/setting"
 	"sync/atomic"
 	"time"
 )
 
 type SingleThreadSimulation struct {
-	settings    settings.Settings
+	settings    setting.Settings
 	worldMap    *worldmap.Map
 	occupiers   occupier.Occupiers
 	renderer    renderer.Renderer
@@ -23,7 +22,7 @@ type SingleThreadSimulation struct {
 	turnCounter int
 }
 
-func New(s settings.Settings, m *worldmap.Map, r renderer.Renderer, init []action.Action, turn []action.Action) Simulation {
+func New(s setting.Settings, m *worldmap.Map, r renderer.Renderer, init []action.Action, turn []action.Action) Simulation {
 	return &SingleThreadSimulation{
 		settings:    s,
 		worldMap:    m,

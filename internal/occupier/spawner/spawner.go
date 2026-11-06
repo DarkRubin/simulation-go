@@ -30,24 +30,7 @@ func (s Spawner) New(entity occupier.EntityType, pos pos.Position) occupier.Occu
 }
 
 func (s Spawner) AmountFor(entity occupier.EntityType, worldSize uint) uint {
-	chance := s.chanceFor(entity)
+	chance := s.ChanceFor(entity)
 	percent := float64(chance) / 100.0
 	return uint(float64(worldSize) * percent)
-}
-
-func (s Spawner) chanceFor(entity occupier.EntityType) uint {
-	switch entity {
-	case occupier.TypeGrass:
-		return s.GrassSpawnChance
-	case occupier.TypeRock:
-		return s.RockSpawnChance
-	case occupier.TypeTree:
-		return s.TreeSpawnChance
-	case occupier.TypeHerbivore:
-		return s.HerbivoreSpawnChance
-	case occupier.TypePredator:
-		return s.PredatorSpawnChance
-	default:
-		panic(fmt.Sprintf("unknown occupier type for summoner: %s", entity))
-	}
 }
