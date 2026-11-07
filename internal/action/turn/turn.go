@@ -22,3 +22,12 @@ func forEachCreature(w *worldmap.Map, o occupier.Occupiers, action func(creature
 		}
 	}
 }
+
+func findNearby(neighbors []occupier.Occupier, target occupier.EntityType) occupier.Occupier {
+	for _, neighbor := range neighbors {
+		if neighbor != nil && neighbor.Type() == target {
+			return neighbor
+		}
+	}
+	return nil
+}
