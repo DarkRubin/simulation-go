@@ -4,23 +4,40 @@ import (
 	"simulation/internal/occupier"
 	"simulation/internal/occupier/creature"
 	"simulation/internal/worldmap"
+	"simulation/pkg/setting"
+	"slices"
 )
 
-type CreatureEatAction struct{}
+type HerbivoresEatAction struct {
+	setting.Settings
+}
 
-func (c CreatureEatAction) Act(w *worldmap.Map, o occupier.Occupiers) {
-	forEachCreature(w, o, func(creature creature.Creature) {
-		if creature.Moved() {
-			return
+func (c HerbivoresEatAction) Act(w *worldmap.Map, o occupier.Occupiers) {
+	for _, herbPos := range o[occupier.TypeHerbivore] {
+		if slices.Index(o[occupier.TypeHerbivore], herbPos) == -1 {
+			continue
 		}
-		oldPos := creature.Pos()
+		herbivore, ok := w.Get(herbPos).(*creature.Herbivore)
+		if herbivore == nil || !ok {
+			continue
+		}
 
-		neighbors := w.GetAll(creature.Pos().Neighbors())
-		food := findNearby(neighbors, creature.TargetType())
-		if food != nil && creature.Eat(food) {
+		if herbivore.IsTired() {
+			continue
+		}
+
+		neighbors := w.GetAll(herbivore.Pos().Neighbors())
+		food := findNearby(neighbors, herbivore.TargetType())
+		if food != nil {
+			oldPos := herbivore.Pos()
+			newPos := food.Pos()
+
+			herbivore.Eat(food, c.HerbivoreEatHeal)
+
 			w.Remove(oldPos)
-			w.Put(creature.Pos(), creature)
-			o.RemovePos(creature.TargetType(), food.Pos())
-			o.UpdatePos(creature.Type(), oldPos, creature.Pos())
+			w.Put(newPos, herbivore)
+			o.RemovePos(herbivore.TargetType(), newPos)
+			o.UpdatePos(herbivore.Type(), oldPos, newPos)
 		}
+	}
 }

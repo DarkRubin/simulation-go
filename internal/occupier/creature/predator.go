@@ -59,29 +59,30 @@ func (p *Predator) IsTired() bool {
 	return p.tired
 }
 
-func (p *Predator) Eat(food occupier.Occupier) bool {
-	if p.moved {
-		return false
-	}
-	p.moved = true
+func (p *Predator) Attack(herbivore *Herbivore, hp int) {
+	herbivore.Hurt(p.damage)
+	p.Heal(hp)
+	p.tired = true
+}
+
+func (p *Predator) Hurt(damage uint) {
+	p.healthPoints -= int(damage)
+}
+
+func (p *Predator) Heal(hp int) {
+	p.healthPoints += hp
+}
+
+func (p *Predator) Eat(food occupier.Occupier, heal int) {
 	if food.Type() != p.TargetType() {
 		panic("invalid type of provided food")
 	}
-	herb := food.(*Herbivore)
-	if herb.HP() > 0 {
-		herb.Hurt(p.damage)
-		p.healthPoints += 3
-		return false
-	}
-
-	p.position = food.Pos()
-	p.healthPoints += 5
-	return true
+	p.Move(food.Pos())
+	p.Heal(heal)
 }
 
 func (p *Predator) Recover() {
-	p.healthPoints -= 1
-	p.moved = false
+	p.tired = false
 }
 
 func NewPredator(pos pos.Position, damage uint, hp int, speed uint) Creature {

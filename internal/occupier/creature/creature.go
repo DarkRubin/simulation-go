@@ -12,7 +12,8 @@ type Creature interface {
 	Move(way []pos.Position) bool
 	IsTired() bool
 	TargetType() occupier.EntityType
-	Eat(occupier.Occupier) bool
+	Hurt(uint)
+	Heal(int)
 	Recover()
 }
 

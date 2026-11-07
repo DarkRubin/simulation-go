@@ -70,9 +70,20 @@ func (h *Herbivore) TargetType() occupier.EntityType {
 func (h *Herbivore) Hurt(damage uint) {
 	h.healthPoints -= int(damage)
 }
+func (h *Herbivore) Heal(hp int) {
+	h.healthPoints += hp
+}
 
 func (h *Herbivore) Recover() {
-	h.moved = false
+	h.tired = false
+}
+
+func (h *Herbivore) Eat(food occupier.Occupier, heal int) {
+	if food.Type() != h.TargetType() {
+		panic("invalid type of provided food")
+	}
+	h.Move(food.Pos())
+	h.Heal(heal)
 }
 
 func NewHerbivore(pos pos.Position, hp int, speed uint) Creature {
