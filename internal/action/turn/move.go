@@ -23,6 +23,10 @@ func (c CreatureMoveAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 		}
 		way, found := c.Wayfinder.Find(creature.Pos(), o[targType], expandFunc)
 
+		if !found || len(way) == 0 {
+			return
+		}
+
 		oldPos := creature.Pos()
 		if found && creature.Move(way) {
 			w.Remove(oldPos)
