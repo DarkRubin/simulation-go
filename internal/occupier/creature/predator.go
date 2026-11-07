@@ -10,7 +10,7 @@ type Predator struct {
 	healthPoints int
 	damage       uint
 	speed        uint
-	moved        bool
+	tired        bool
 }
 
 func (p *Predator) Type() occupier.EntityType {
@@ -55,8 +55,8 @@ func (p *Predator) Move(way []pos.Position) bool {
 	return true
 }
 
-func (p *Predator) Moved() bool {
-	return p.moved
+func (p *Predator) IsTired() bool {
+	return p.tired
 }
 
 func (p *Predator) Eat(food occupier.Occupier) bool {

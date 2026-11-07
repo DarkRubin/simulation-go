@@ -9,7 +9,7 @@ type Herbivore struct {
 	position     pos.Position
 	healthPoints int
 	speed        uint
-	moved        bool
+	tired        bool
 }
 
 func (h *Herbivore) Type() occupier.EntityType {
@@ -28,8 +28,8 @@ func (h *Herbivore) Speed() uint {
 	return h.speed
 }
 
-func (h *Herbivore) Moved() bool {
-	return h.moved
+func (h *Herbivore) IsTired() bool {
+	return h.tired
 }
 
 func (h *Herbivore) Move(way []pos.Position) bool {
