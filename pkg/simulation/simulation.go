@@ -10,4 +10,5 @@ type Simulation interface {
 	Start()
 	Pause()
 	Resume()
+	IsPaused() bool
 }

@@ -75,3 +75,7 @@ func (s *SingleThreadSimulation) Pause() {
 func (s *SingleThreadSimulation) Resume() {
 	s.paused.Store(false)
 }
+
+func (s *SingleThreadSimulation) IsPaused() bool {
+	return s.paused.Load()
+}
