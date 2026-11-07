@@ -10,7 +10,7 @@ type RespawnOccupiersAction struct {
 	spawner.Spawner
 }
 
-func (r *RespawnOccupiersAction) Act(w *worldmap.Map, o occupier.Occupiers) {
+func (r RespawnOccupiersAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 	for entity := range occupier.TypeCount_ {
 		if len(o[entity]) > 0 {
 			continue
