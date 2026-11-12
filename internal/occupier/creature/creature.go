@@ -9,7 +9,7 @@ type Creature interface {
 	occupier.Occupier
 	HP() int
 	Speed() uint
-	Move(way []pos.Position) bool
+	Move(pos.Position)
 	IsTired() bool
 	TargetType() occupier.EntityType
 	Hurt(uint)

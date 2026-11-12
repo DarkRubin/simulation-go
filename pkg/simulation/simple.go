@@ -38,31 +38,29 @@ func (s *SingleThreadSimulation) Map() *worldmap.Map {
 }
 
 func (s *SingleThreadSimulation) NextTurn() {
-	if !s.started.Load() {
-		panic("Simulation haven't started")
-	}
-
 	for _, act := range s.turnActions {
 		act.Act(s.worldMap, s.occupiers)
 	}
 
 	s.turnCounter++
-	fmt.Println("Move ", s.turnCounter)
-	s.renderer.Render(*s.worldMap)
+	s.renderer.Render(*s.worldMap, s.turnCounter, s.paused.Load())
 }
 
 func (s *SingleThreadSimulation) Start() {
+	if s.started.Load() {
+		return
+	}
 	for _, act := range s.initActions {
 		act.Act(s.worldMap, s.occupiers)
 	}
 	s.started.Store(true)
+	s.paused.Store(true)
 
-	fmt.Println("Original simulation")
-	s.renderer.Render(*s.worldMap)
-	time.Sleep(s.settings.GetMoveDelayDuration())
-
-	for !s.paused.Load() {
-		s.renderer.ClearScreen()
+	s.renderer.Render(*s.worldMap, 0, s.paused.Load())
+	for {
+		for s.paused.Load() {
+			time.Sleep(100)
+		}
 		s.NextTurn()
 		time.Sleep(s.settings.GetMoveDelayDuration())
 	}

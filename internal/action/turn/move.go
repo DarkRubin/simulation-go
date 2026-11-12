@@ -14,7 +14,7 @@ type CreatureMoveAction struct {
 
 func (c CreatureMoveAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 	forEachCreature(w, o, func(creature creature.Creature) {
-		if creature.Moved() || len(o[creature.TargetType()]) < 0 {
+		if creature.IsTired() || len(o[creature.TargetType()]) < 0 {
 			return
 		}
 		targType := creature.TargetType()
@@ -28,11 +28,14 @@ func (c CreatureMoveAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 		}
 
 		oldPos := creature.Pos()
-		if found && creature.Move(way) {
-			w.Remove(oldPos)
-			w.Put(creature.Pos(), creature)
-			o.UpdatePos(creature.Type(), oldPos, creature.Pos())
+		newPos := way[len(way)-1]
+		if uint(len(way)) > creature.Speed() {
+			newPos = way[creature.Speed()]
 		}
+		creature.Move(newPos)
+		w.Remove(oldPos)
+		w.Put(newPos, creature)
+		o.UpdatePos(creature.Type(), oldPos, newPos)
 	})
 }
 

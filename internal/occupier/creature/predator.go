@@ -37,22 +37,9 @@ func (p *Predator) TargetType() occupier.EntityType {
 	return occupier.TypeHerbivore
 }
 
-func (p *Predator) Move(way []pos.Position) bool {
-	if p.moved {
-		panic("pred is already moved")
-	}
-	wayLen := len(way)
-	if wayLen == 0 {
-		return false
-	}
-	if uint(wayLen) <= p.Speed() {
-		targ := way[wayLen-1]
-		p.position = targ
-	} else {
-		p.position = way[p.Speed()]
-	}
-	p.moved = true
-	return true
+func (p *Predator) Move(newPos pos.Position) {
+	p.tired = true
+	p.position = newPos
 }
 
 func (p *Predator) IsTired() bool {
