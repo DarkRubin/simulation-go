@@ -8,9 +8,11 @@ with features of Go language.
 
 ### Screenshots of application
 Simulation with 7x6 world size
+
 ![img.png](img.png)
 
 Simulation with 15x15 world size
+
 ![img_1.png](img_1.png)
 
 ### Try by yourself
@@ -27,4 +29,4 @@ For example, you can do map bigger, by set up higher numbers to `world_map.heigh
 
 ### Dependencies
 
-Only dependency for this project, is `yaml/v4` library to parse config file. It already included in `go.mod` file
+Only dependency for this project, is `yaml/v4` the library to parse config file. It already included in `go.mod` file
