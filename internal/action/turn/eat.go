@@ -32,7 +32,7 @@ func (c HerbivoresEatAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 			oldPos := herbivore.Pos()
 			newPos := food.Pos()
 
-			herbivore.Eat(food, c.HerbivoreEatHeal)
+			herbivore.Eat(food, c.EatHeal)
 
 			w.Remove(oldPos)
 			w.Put(newPos, herbivore)

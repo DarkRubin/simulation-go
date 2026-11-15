@@ -1,13 +1,13 @@
 package setting
 
 type WorldMapSettings struct {
-	WorldMapHeight uint
-	WorldMapWidth  uint
+	Height uint `yaml:"height"`
+	Width  uint `yaml:"width"`
 }
 
 func DefaultWorldMapSettings() WorldMapSettings {
 	return WorldMapSettings{
-		WorldMapHeight: 6,
-		WorldMapWidth:  7,
+		Height: 6,
+		Width:  7,
 	}
 }

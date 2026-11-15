@@ -22,19 +22,3 @@ func Pos(x uint, y uint) Position {
 func RandomPos(xLim, yLim uint) Position {
 	return Position{rand.UintN(xLim), rand.UintN(yLim)}
 }
-
-func (p Position) Up() Position {
-	return Position{p.x, p.y - 1}
-}
-
-func (p Position) Down() Position {
-	return Position{p.x, p.y + 1}
-}
-
-func (p Position) Left() Position {
-	return Position{p.x - 1, p.y}
-}
-
-func (p Position) Right() Position {
-	return Position{p.x + 1, p.y}
-}

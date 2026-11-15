@@ -1,11 +1,12 @@
 package setting
 
 type Settings struct {
-	HerbivoreSettings
-	PredatorSettings
-	SpawnChanceSettings
-	WorldMapSettings
-	MoveSettings
+	HerbivoreSettings   `yaml:"herbivore"`
+	PredatorSettings    `yaml:"predator"`
+	SpawnChanceSettings `yaml:"spawn_chance"`
+	WorldMapSettings    `yaml:"world_map"`
+	MoveSettings        `yaml:"move"`
+	WayfinderSettings   `yaml:"wayfinder"`
 }
 
 func Default() *Settings {
@@ -15,5 +16,6 @@ func Default() *Settings {
 		DefaultSpawnChanceSettings(),
 		DefaultWorldMapSettings(),
 		DefaultMoveSettings(),
+		DefaultWayfinderSettings(),
 	}
 }

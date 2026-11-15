@@ -4,10 +4,11 @@ import (
 	"simulation/internal/occupier"
 	"simulation/internal/occupier/spawner"
 	"simulation/internal/worldmap"
+	"simulation/pkg/setting"
 )
 
 type RespawnOccupiersAction struct {
-	spawner.Spawner
+	setting.Settings
 }
 
 func (r RespawnOccupiersAction) Act(w *worldmap.Map, o occupier.Occupiers) {
@@ -15,8 +16,8 @@ func (r RespawnOccupiersAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 		if len(o[entity]) > 0 {
 			continue
 		}
-		for range r.AmountFor(entity, w.Size()) / 2 {
-			summoned := r.New(entity, w.FreePos())
+		for range spawner.AmountFor(entity, r.Settings) / 2 {
+			summoned := spawner.NewOccupier(entity, w.FreePos(), r.Settings)
 			w.Put(summoned.Pos(), summoned)
 			o[entity] = append(o[entity], summoned.Pos())
 		}

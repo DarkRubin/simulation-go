@@ -3,15 +3,15 @@ package setting
 import "time"
 
 type MoveSettings struct {
-	MoveDelayMs uint
+	DelayMs uint `yaml:"delay_ms"`
 }
 
 func (s *MoveSettings) GetMoveDelayDuration() time.Duration {
-	return time.Duration(s.MoveDelayMs) * time.Millisecond
+	return time.Duration(s.DelayMs) * time.Millisecond
 }
 
 func DefaultMoveSettings() MoveSettings {
 	return MoveSettings{
-		MoveDelayMs: 600,
+		DelayMs: 600,
 	}
 }

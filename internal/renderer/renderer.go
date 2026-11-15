@@ -5,5 +5,5 @@ import (
 )
 
 type Renderer interface {
-	Render(m worldmap.Map, move int, paused bool)
+	Render(m worldmap.Map) string
 }

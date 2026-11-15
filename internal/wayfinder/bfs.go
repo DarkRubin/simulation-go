@@ -7,13 +7,17 @@ import (
 
 const MaxWayTurns = 100
 
-type Bfs struct {
+type bfs struct {
 }
 
-func (b Bfs) Find(current pos.Position, targets []pos.Position, expand expand) ([]pos.Position, bool) {
+func (b bfs) Name() AlgorithmName {
+	return BreadthFirstSearch
+}
+
+func (b bfs) Find(current pos.Position, targets []pos.Position, expand expand) ([]pos.Position, bool) {
 	way := make([]pos.Position, 0, MaxWayTurns)
 
-	target, success := bfs(current, targets, expand)
+	target, success := bfsInternal(current, targets, expand)
 	way = append([]pos.Position{target}, way...)
 	if !success {
 		return way, false
@@ -21,7 +25,7 @@ func (b Bfs) Find(current pos.Position, targets []pos.Position, expand expand) (
 
 	for !slices.Contains(current.Neighbors(), target) {
 		nextTargets := removeAll(expand(target), way)
-		target, success = bfs(current, nextTargets, expand)
+		target, success = bfsInternal(current, nextTargets, expand)
 		if !success {
 			return way, false
 		}
@@ -35,7 +39,7 @@ func (b Bfs) Find(current pos.Position, targets []pos.Position, expand expand) (
 	return way[:len(way)-1], true
 }
 
-func bfs(start pos.Position, targets []pos.Position, expand expand) (pos.Position, bool) {
+func bfsInternal(start pos.Position, targets []pos.Position, expand expand) (pos.Position, bool) {
 	visited := make(map[pos.Position]bool)
 	var current pos.Position
 	queue := []pos.Position{start}

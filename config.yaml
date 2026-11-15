@@ -1,0 +1,28 @@
+world_map:
+  height: 6
+  width: 7
+
+wayfinder:
+  algorithm: "bfs"
+
+spawn_chance:
+  grass: 10
+  rock: 10
+  tree: 10
+  herbivore: 10
+  predator: 10
+
+move:
+  delay_ms: 800
+
+predator:
+  speed: 1
+  hp: 10
+  attack_heal: 3
+  kill_heal: 5
+  damage: 5
+
+herbivore:
+  speed: 2
+  hp: 10
+  eat_heal: 5

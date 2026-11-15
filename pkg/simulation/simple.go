@@ -3,9 +3,9 @@ package simulation
 import (
 	"simulation/internal/action"
 	"simulation/internal/occupier"
-	"simulation/internal/renderer"
 	"simulation/internal/worldmap"
 	"simulation/pkg/setting"
+	"simulation/pkg/ui"
 	"sync/atomic"
 	"time"
 )
@@ -14,7 +14,7 @@ type SingleThreadSimulation struct {
 	settings    setting.Settings
 	worldMap    *worldmap.Map
 	occupiers   occupier.Occupiers
-	renderer    renderer.Renderer
+	uiCallback  ui.Callback
 	initActions []action.Action
 	turnActions []action.Action
 	paused      atomic.Bool
@@ -22,13 +22,13 @@ type SingleThreadSimulation struct {
 	turnCounter int
 }
 
-func New(s setting.Settings, m *worldmap.Map, r renderer.Renderer, init []action.Action, turn []action.Action) Simulation {
+func New(s setting.Settings, m *worldmap.Map, callback ui.Callback, init []action.Action, turn []action.Action) Simulation {
 	return &SingleThreadSimulation{
 		settings:    s,
 		worldMap:    m,
 		occupiers:   occupier.Occupiers{},
-		renderer:    r,
 		initActions: init,
+		uiCallback:  callback,
 		turnActions: turn,
 	}
 }
@@ -43,7 +43,7 @@ func (s *SingleThreadSimulation) NextTurn() {
 	}
 
 	s.turnCounter++
-	s.renderer.Render(*s.worldMap, s.turnCounter, s.paused.Load())
+	s.uiCallback(*s.worldMap, s.turnCounter, s.paused.Load())
 }
 
 func (s *SingleThreadSimulation) Start() {
@@ -56,10 +56,10 @@ func (s *SingleThreadSimulation) Start() {
 	s.started.Store(true)
 	s.paused.Store(true)
 
-	s.renderer.Render(*s.worldMap, 0, s.paused.Load())
+	s.uiCallback(*s.worldMap, s.turnCounter, s.paused.Load())
 	for {
-		for s.paused.Load() {
-			time.Sleep(100)
+		for s.paused.Load() == true {
+			time.Sleep(1000)
 		}
 		s.NextTurn()
 		time.Sleep(s.settings.GetMoveDelayDuration())

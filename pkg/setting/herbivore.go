@@ -1,15 +1,15 @@
 package setting
 
 type HerbivoreSettings struct {
-	HerbivoreSpeed   uint
-	HerbivoreHp      uint
-	HerbivoreEatHeal int
+	Speed   uint `yaml:"speed"`
+	Hp      uint `yaml:"hp"`
+	EatHeal int  `yaml:"eat_heal"`
 }
 
 func DefaultHerbivoreSettings() HerbivoreSettings {
 	return HerbivoreSettings{
-		HerbivoreSpeed:   2,
-		HerbivoreHp:      10,
-		HerbivoreEatHeal: 5,
+		Speed:   2,
+		Hp:      10,
+		EatHeal: 5,
 	}
 }

@@ -34,14 +34,14 @@ func (p PredatorsAttackAction) Act(w *worldmap.Map, o occupier.Occupiers) {
 			panic(fmt.Sprintf("predator target is not a %s", occupier.TypeHerbivore))
 		}
 
-		predator.Attack(herbivore, p.PredatorAttackHeal)
+		predator.Attack(herbivore, p.AttackHeal)
 
 		targetDead := herbivore.HP() < 1
 		if targetDead {
 			oldPos := predator.Pos()
 			newPos := herbivore.Pos()
 
-			predator.Eat(herbivore, p.PredatorKillHeal)
+			predator.Eat(herbivore, p.KillHeal)
 
 			w.Remove(oldPos)
 			w.Put(newPos, predator)
